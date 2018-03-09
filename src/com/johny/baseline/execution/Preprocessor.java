@@ -91,13 +91,16 @@ public class Preprocessor {
 		
 		for (Article article : articles) {
 			
-			for (InfoboxTuple tuple : article.getInfobox().getTuples()) {
+			if(article.getInfobox() != null) {
 				
-				if(attributesFrequency.containsKey(tuple.getProperty())) {
-					Integer currentCount = attributesFrequency.get(tuple.getProperty());
-					attributesFrequency.replace(tuple.getProperty(), currentCount, currentCount + 1);
-				}else {
-					attributesFrequency.put(tuple.getProperty(), 1);
+				for (InfoboxTuple tuple : article.getInfobox().getTuples()) {
+					
+					if(attributesFrequency.containsKey(tuple.getProperty())) {
+						Integer currentCount = attributesFrequency.get(tuple.getProperty());
+						attributesFrequency.replace(tuple.getProperty(), currentCount, currentCount + 1);
+					}else {
+						attributesFrequency.put(tuple.getProperty(), 1);
+					}
 				}
 			}
 		}

@@ -104,7 +104,9 @@ public class StaXParserCallable implements Callable<List<Article>>{
 					if (endElement.getName().getLocalPart().equals(PAGE) 
 							&& article.getArticleTitle()!=null) {
 						
-						if(!article.getArticleTitle().contains(":"))
+						if(!article.getArticleTitle().contains(":") && 
+								article.getArticleTitle() != null &&
+								article.getText() != null)
 							articles.add(article);
 						
 						article = new Article();
