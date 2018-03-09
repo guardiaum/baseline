@@ -15,7 +15,7 @@ public class Run {
 		
 		try {
 			
-			List<Article> articles = p.selectArticles("Infobox_power_station");
+			List<Article> articles = p.selectArticles("Infobox power station");
 			
 			System.out.println("Found Articles: #" + articles.size());
 			

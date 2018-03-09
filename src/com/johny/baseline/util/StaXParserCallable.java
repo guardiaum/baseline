@@ -43,7 +43,6 @@ public class StaXParserCallable implements Callable<List<Article>>{
 	@Override
 	public List<Article> call() throws Exception {
 		System.out.println(">>>> File: " + this.file);
-		System.out.println("-> SEARCHING FOR PAGES USING " + templateName.toUpperCase() + " INFOBOX");
 		return readConfig(this.file);
 	}
 	
@@ -201,8 +200,6 @@ public class StaXParserCallable implements Callable<List<Article>>{
 											tupleRaw[0].replace("|", "").trim(), 
 											tupleRaw[1].trim()
 											.replaceAll("\n", ""));
-							
-							//System.out.println(tuple.toString());
 							
 							if (!tuples.contains(tuple))
 								tuples.add(tuple);

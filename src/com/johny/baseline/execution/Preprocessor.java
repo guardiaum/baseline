@@ -38,7 +38,9 @@ public class Preprocessor {
 	 */
 	public List<Article> selectArticles(String templateName) 
 			throws IOException, InterruptedException, ExecutionException {
-
+		
+		System.out.println("-> SEARCHING FOR PAGES USING " + templateName.toUpperCase() + " INFOBOX");
+		
 		ExecutorService executor = Executors.newFixedThreadPool(THREADS_NUMBER);
 
 		// get references to all chunk files
