@@ -86,8 +86,12 @@ public class StaXParserCallable implements Callable<List<Article>>{
 						
 						if (text.contains(templateName.toLowerCase())) {
 							article.setText(text);
-							text = text.substring(0, 2000);
+							
+							if(text.length() >= 2001)
+								text = text.substring(0, 2000);
+							
 							InfoboxSchema infobox = getInfoboxSchemaFromText(text);
+							
 							article.setInfobox(infobox);
 						}
 						
