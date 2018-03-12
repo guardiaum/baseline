@@ -30,6 +30,7 @@ public class Preprocessor {
 	
 	public static final String WIKIPEDIA_CHUNKS = "/home/jms5/kobe/infoboxes-extractor/wikipedia-dump/wikipedia-xml-chunks";
 	public static final String TRAINING_DATASET = "/home/jms5/baseline/training-dataset";
+	public static final String SENTENCE_DETECTOR = "/home/jms5/baseline/open-nlp-models/en-sent.bin";
 	public static final int THREADS_NUMBER = 8;
 	
 	/**
@@ -174,7 +175,7 @@ public class Preprocessor {
 				String text = article.getText();
 				String[] sentences = null;
 				
-				try (InputStream modelIn = new FileInputStream("en-sent.bin")){
+				try (InputStream modelIn = new FileInputStream(SENTENCE_DETECTOR)){
 					SentenceModel model = new SentenceModel(modelIn);
 					
 					SentenceDetectorME sentenceDetector = new SentenceDetectorME(model);
