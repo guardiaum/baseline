@@ -1,5 +1,6 @@
 package com.johny.baseline.modules;
 
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,7 +30,7 @@ import opennlp.tools.sentdetect.SentenceModel;
 public class Preprocessor {
 	
 	public static final String WIKIPEDIA_CHUNKS = "/home/jms5/kobe/infoboxes-extractor/wikipedia-dump/wikipedia-xml-chunks";
-	public static final String TRAINING_DATASET = "/home/jms5/baseline/training-dataset";
+	public static final String TRAINING_DATASET = "/home/jms5/baseline/training-dataset.csv";
 	public static final String SENTENCE_DETECTOR = "/home/jms5/baseline/open-nlp-models/en-sent.bin";
 	public static final int THREADS_NUMBER = 8;
 	
@@ -138,18 +139,17 @@ public class Preprocessor {
 		System.out.println("CONSTRUCTING TRAINING DATASET");
 		System.out.println("TRAINING EXAMPLES SIZE: " + trainingExamples.size());
 		
-		String content = "";
-		for (String[] trainingExample : trainingExamples) {
-			content += trainingExample[0] + "," 
-						+ trainingExample[1] + "," 
-						+ trainingExample[2] + "\n";
-		}
-		
-		try {
-			Files.write(Paths.get(TRAINING_DATASET), content.getBytes());
+		Path path = Paths.get(TRAINING_DATASET);
+		try (BufferedWriter writer = Files.newBufferedWriter(path)){
+			for (String[] trainingExample : trainingExamples) {
+				String line = trainingExample[0] + "," 
+							+ trainingExample[1] + "," 
+							+ trainingExample[2];
+				writer.write(line);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}		
 	}
 	
 	/***
