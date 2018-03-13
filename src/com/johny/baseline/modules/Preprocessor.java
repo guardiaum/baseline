@@ -136,6 +136,7 @@ public class Preprocessor {
 	 */
 	public void constructsTrainingDataset(List<String[]> trainingExamples) {
 		System.out.println("CONSTRUCTING TRAINING DATASET");
+		System.out.println("TRAINING EXAMPLES SIZE: " + trainingExamples.size());
 		
 		String content = "";
 		for (String[] trainingExample : trainingExamples) {

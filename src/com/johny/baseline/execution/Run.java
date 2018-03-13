@@ -33,6 +33,8 @@ public class Run {
 			
 			p.constructsTrainingDataset(trainingExamples);
 			
+			System.out.println("FINISHED!");
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
