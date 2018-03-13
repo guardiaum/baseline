@@ -85,14 +85,17 @@ public class StaXParserCallable implements Callable<List<Article>>{
 						text = eventReader.getElementText().toLowerCase();
 						
 						if (text.contains(templateName.toLowerCase())) {
-							article.setText(text);
 							
+							String subText = text;
 							if(text.length() >= 2001)
-								text = text.substring(0, 2000);
+								subText = text.substring(0, 2000);
 							
-							InfoboxSchema infobox = getInfoboxSchemaFromText(text);
-							
+							InfoboxSchema infobox = getInfoboxSchemaFromText(subText);
 							article.setInfobox(infobox);
+							
+							if(infobox != null)
+								article.setText(text.replace(regexInfoboxMapping, ""));
+							
 						}
 						
 						continue;

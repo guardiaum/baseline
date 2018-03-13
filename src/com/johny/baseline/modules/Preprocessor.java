@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -144,7 +145,7 @@ public class Preprocessor {
 			for (String[] trainingExample : trainingExamples) {
 				String line = trainingExample[0] + "," 
 							+ trainingExample[1] + "," 
-							+ trainingExample[2];
+							+ trainingExample[2] + "\n";
 				writer.write(line);
 			}
 		} catch (IOException e) {
@@ -272,7 +273,12 @@ public class Preprocessor {
 	 */
 	private List<String[]> labelSentences(InfoboxTuple tuple, List<String> allMatches) {
 
-		String[] tokens = tuple.getProperty().split(" ");
+		List<String> propTokens = Arrays.asList(tuple.getProperty().replaceAll("_", " ").split(" "));
+		List<String> valueTokens = Arrays.asList(tuple.getValue().replaceAll("_", " ").split(" "));
+		
+		List<String> tokens = new ArrayList<String>();
+		tokens.addAll(propTokens);
+		tokens.addAll(valueTokens);
 		
 		List<String[]> trainingExamples = new ArrayList<String[]>();
 		
@@ -286,7 +292,7 @@ public class Preprocessor {
 			
 			}
 			
-			double matchPercentage = count / (double) tokens.length;
+			double matchPercentage = count / (double) tokens.size();
 			
 			if(matchPercentage >= 0.6)
 				trainingExamples.add(new String[] {tuple.getProperty(), sentenceMatch, "t"});
