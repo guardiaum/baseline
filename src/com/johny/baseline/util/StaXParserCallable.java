@@ -88,8 +88,8 @@ public class StaXParserCallable implements Callable<List<Article>>{
 							
 							if(infobox != null)
 								article.setText(
-										text.replace(Constants.REGEX_INFOBOX_MAPPING, "")
-										.replaceAll("\\n", " "));
+										text.replaceAll(Constants.REGEX_INFOBOX_MAPPING, "")
+										.replaceAll("\\n", " ").replaceAll("\\t", ""));
 							
 						}
 						

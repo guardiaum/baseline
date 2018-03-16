@@ -141,9 +141,9 @@ public class Preprocessor {
 		Path path = Paths.get(Constants.TRAINING_DATASET);
 		try (BufferedWriter writer = Files.newBufferedWriter(path)){
 			for (String[] trainingExample : trainingExamples) {
-				String line = trainingExample[0] + "," 
-							+ trainingExample[1] + "," 
-							+ trainingExample[2] + "\n";
+				String line = "\"" + trainingExample[0] + "\",\"" 
+							+ "\"" + trainingExample[1] + "\",\"" 
+							+ "\"" +trainingExample[2] + "\"\n";
 				writer.write(line);
 			}
 		} catch (IOException e) {
