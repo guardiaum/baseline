@@ -23,14 +23,7 @@ import com.johny.baseline.beans.InfoboxTuple;
 
 public class StaXParserCallable implements Callable<List<Article>>{
 
-	private static final String PAGE = "page";
-	private static final String TITLE = "title";
-	private static final String REDIRECT = "redirect";
-	private static final String REVISION = "revision";
-	private static final String TEXT = "text";
 	
-	private static final String regexInfoboxMapping = "\\{\\{\\s?infobox.*\\n(|.*\\n)*\\}\\}";
-	private static final String regexInfoboxTemplate = "infobox(\\s\\w*){1,2}";
 	
 	private String file;
 	private String templateName;
@@ -65,7 +58,7 @@ public class StaXParserCallable implements Callable<List<Article>>{
 				String text = "";
 				if (event.isStartElement()) {
 					
-					if (event.asStartElement().getName().getLocalPart().equals(TITLE)) {
+					if (event.asStartElement().getName().getLocalPart().equals(Constants.TITLE)) {
 						
 						event = eventReader.nextEvent();
 						article.setArticleTitle(event.asCharacters().getData().replaceAll(" ", "_"));
@@ -74,13 +67,13 @@ public class StaXParserCallable implements Callable<List<Article>>{
 					
 					}
 					
-					if(event.asStartElement().getName().getLocalPart().equals(REDIRECT)) {
+					if(event.asStartElement().getName().getLocalPart().equals(Constants.REDIRECT)) {
 						// Discard redirect article
 						article = new Article();
 						continue;
 					}
 
-					if (event.asStartElement().getName().getLocalPart().equals(TEXT)) {
+					if (event.asStartElement().getName().getLocalPart().equals(Constants.TEXT)) {
 						
 						text = eventReader.getElementText().toLowerCase();
 						
@@ -94,7 +87,9 @@ public class StaXParserCallable implements Callable<List<Article>>{
 							article.setInfobox(infobox);
 							
 							if(infobox != null)
-								article.setText(text.replace(regexInfoboxMapping, ""));
+								article.setText(
+										text.replace(Constants.REGEX_INFOBOX_MAPPING, "")
+										.replaceAll("\\n", " "));
 							
 						}
 						
@@ -107,7 +102,7 @@ public class StaXParserCallable implements Callable<List<Article>>{
 
 					EndElement endElement = event.asEndElement();
 
-					if (endElement.getName().getLocalPart().equals(PAGE) 
+					if (endElement.getName().getLocalPart().equals(Constants.PAGE) 
 							&& article.getArticleTitle()!=null) {
 						
 						if(!article.getArticleTitle().contains(":") && 
@@ -137,8 +132,8 @@ public class StaXParserCallable implements Callable<List<Article>>{
 	 */
 	private InfoboxSchema getInfoboxSchemaFromText(String text) {
 
-		Pattern patternInfobox = Pattern.compile(regexInfoboxMapping);
-		Pattern patternTemplateName = Pattern.compile(regexInfoboxTemplate);
+		Pattern patternInfobox = Pattern.compile(Constants.REGEX_INFOBOX_MAPPING);
+		Pattern patternTemplateName = Pattern.compile(Constants.REGEX_INFOBOX_TEMPLATE);
 
 		// extract infobox
 		Matcher mInfobox = patternInfobox.matcher(text);
@@ -161,7 +156,7 @@ public class StaXParserCallable implements Callable<List<Article>>{
 				infobox.setTemplateName(null);
 
 			// removes template name from infobox matching
-			String props = infoboxMatch.replaceAll(regexInfoboxTemplate, "")
+			String props = infoboxMatch.replaceAll(Constants.REGEX_INFOBOX_TEMPLATE, "")
 					.replaceAll("\\<.*\\>", " ")
 					.replaceAll("\n\\|", " | ").replaceAll("\\{", "")
 					.replaceAll("\\}", "").replaceAll("\\[", "").replaceAll("\\]", "");

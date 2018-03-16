@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 import com.johny.baseline.beans.Article;
 import com.johny.baseline.beans.InfoboxTuple;
+import com.johny.baseline.util.Constants;
 import com.johny.baseline.util.StaXParserCallable;
 import com.johny.baseline.util.Util;
 
@@ -30,10 +31,7 @@ import opennlp.tools.sentdetect.SentenceModel;
 
 public class Preprocessor {
 	
-	public static final String WIKIPEDIA_CHUNKS = "/home/jms5/kobe/infoboxes-extractor/wikipedia-dump/wikipedia-xml-chunks";
-	public static final String TRAINING_DATASET = "/home/jms5/baseline/training-dataset.csv";
-	public static final String SENTENCE_DETECTOR = "/home/jms5/baseline/open-nlp-models/en-sent.bin";
-	public static final int THREADS_NUMBER = 8;
+	
 	
 	/**
 	 * Scans the Wikipedia corpus and selects all articles containing the exact name
@@ -51,10 +49,10 @@ public class Preprocessor {
 		
 		System.out.println("-> SEARCHING FOR PAGES USING " + templateName.toUpperCase() + " INFOBOX");
 		
-		ExecutorService executor = Executors.newFixedThreadPool(THREADS_NUMBER);
+		ExecutorService executor = Executors.newFixedThreadPool(Constants.THREADS_NUMBER);
 
 		// get references to all chunk files
-		List<Path> files = Files.walk(Paths.get(WIKIPEDIA_CHUNKS)).filter(Files::isRegularFile)
+		List<Path> files = Files.walk(Paths.get(Constants.WIKIPEDIA_CHUNKS)).filter(Files::isRegularFile)
 				.collect(Collectors.toList());
 
 		List<Callable<List<Article>>> dumpTasks = new ArrayList<Callable<List<Article>>>();
@@ -140,7 +138,7 @@ public class Preprocessor {
 		System.out.println("CONSTRUCTING TRAINING DATASET");
 		System.out.println("TRAINING EXAMPLES SIZE: " + trainingExamples.size());
 		
-		Path path = Paths.get(TRAINING_DATASET);
+		Path path = Paths.get(Constants.TRAINING_DATASET);
 		try (BufferedWriter writer = Files.newBufferedWriter(path)){
 			for (String[] trainingExample : trainingExamples) {
 				String line = trainingExample[0] + "," 
@@ -177,7 +175,7 @@ public class Preprocessor {
 				String text = article.getText();
 				String[] sentences = null;
 				
-				try (InputStream modelIn = new FileInputStream(SENTENCE_DETECTOR)){
+				try (InputStream modelIn = new FileInputStream(Constants.SENTENCE_DETECTOR)){
 					SentenceModel model = new SentenceModel(modelIn);
 					
 					SentenceDetectorME sentenceDetector = new SentenceDetectorME(model);
