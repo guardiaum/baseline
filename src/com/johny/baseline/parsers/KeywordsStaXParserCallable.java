@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
@@ -95,12 +96,11 @@ public class KeywordsStaXParserCallable implements Callable<List<Article>>{
 							categories[i] = category;
 						}
 						
-						System.out.println(categories);
-						
 						for (String keyword : keywords) {
 							for (String category : categories) {
 								if(category.contains(keyword)) {
-									System.out.println("TRUE");
+									System.out.println(article.getArticleTitle() +" -> " + Arrays.toString(categories));
+									System.out.println(article.getArticleTitle() +" -> " + "TRUE");
 									article.setMember(true);
 								}
 							}

@@ -2,6 +2,7 @@ package com.johny.baseline.execution;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -40,7 +41,7 @@ public class Run {
 			
 			String[] keywords = args[0].replace("infobox", "").split(" ");
 			
-			System.out.println("KEYWORDS: "+ keywords.toString());
+			System.out.println("KEYWORDS: "+ Arrays.toString(keywords));
 			
 			List<Article> labeledArticles = c.documentClassifier(keywords);
 			
