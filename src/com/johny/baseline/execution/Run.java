@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 import com.johny.baseline.beans.Article;
+import com.johny.baseline.modules.Classifier;
 import com.johny.baseline.modules.Preprocessor;
 
 public class Run {
@@ -14,9 +16,10 @@ public class Run {
 	public static void main(String[] args) {
 		
 		Preprocessor p = new Preprocessor();
+		Classifier c = new Classifier();
 		
 		try {
-			
+			/*
 			List<Article> articles = p.selectArticles(args[0]);
 			
 			System.out.println("Found Articles: #" + articles.size());
@@ -32,6 +35,21 @@ public class Run {
 			List<String[]> trainingExamples = p.documentSegmentation(articles, listSelectedAttributes);
 			
 			p.constructsTrainingDataset(trainingExamples);
+			
+			*/
+			
+			String[] keywords = args[0].replace("infobox", "").split(" ");
+			
+			System.out.println("KEYWORDS: "+ keywords.toString());
+			
+			List<Article> labeledArticles = c.documentClassifier(keywords);
+			
+			List<Article> articlesMember = labeledArticles
+					.stream().filter(article -> article.isMember()==true)
+					.collect(Collectors.toList());
+			
+			System.out.println("Articles not member: #" + (labeledArticles.size() - articlesMember.size()));
+			System.out.println("Articles member: #" + articlesMember.size());
 			
 			System.out.println("FINISHED!");
 			

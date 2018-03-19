@@ -1,4 +1,4 @@
-package com.johny.baseline.util;
+package com.johny.baseline.parsers;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,15 +20,14 @@ import javax.xml.stream.events.XMLEvent;
 import com.johny.baseline.beans.Article;
 import com.johny.baseline.beans.InfoboxSchema;
 import com.johny.baseline.beans.InfoboxTuple;
+import com.johny.baseline.util.Constants;
 
-public class StaXParserCallable implements Callable<List<Article>>{
+public class TemplateStaXParserCallable implements Callable<List<Article>>{
 
-	
-	
 	private String file;
 	private String templateName;
 	
-	public StaXParserCallable(Path file, String templateName) throws IOException {
+	public TemplateStaXParserCallable(Path file, String templateName) throws IOException {
 		this.file = file.toAbsolutePath().toString();
 		this.templateName = templateName;
 	}

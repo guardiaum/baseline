@@ -9,18 +9,22 @@ public class Article {
 	private String articleTitle;
 	private InfoboxSchema infobox;
 	private String text;
+	private boolean isMember;
 
 	public Article() {
+		this.isMember = false;
 	}
 	
 	public Article(String articleTitle) {
 		this.articleTitle = articleTitle;
+		this.isMember = false;
 	}
 	
 	public Article(String articleTitle, InfoboxSchema infobox) {
 		super();
 		this.articleTitle = articleTitle;
 		this.infobox = infobox;
+		this.isMember = false;
 	}
 
 	public Article(String articleTitle, InfoboxSchema infobox, String text) {
@@ -28,6 +32,7 @@ public class Article {
 		this.articleTitle = articleTitle;
 		this.infobox = infobox;
 		this.text = text;
+		this.isMember = false;
 	}
 
 	public InfoboxSchema getInfobox() {
@@ -53,7 +58,15 @@ public class Article {
 	public void setText(String text) {
 		this.text = text;
 	}
+	
+	public boolean isMember() {
+		return isMember;
+	}
 
+	public void setMember(boolean isMember) {
+		this.isMember = isMember;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		boolean same = false;

@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 
 import com.johny.baseline.beans.Article;
 import com.johny.baseline.beans.InfoboxTuple;
+import com.johny.baseline.parsers.TemplateStaXParserCallable;
 import com.johny.baseline.util.Constants;
-import com.johny.baseline.util.StaXParserCallable;
 import com.johny.baseline.util.Util;
 
 import opennlp.tools.sentdetect.SentenceDetectorME;
@@ -58,7 +58,7 @@ public class Preprocessor {
 		List<Callable<List<Article>>> dumpTasks = new ArrayList<Callable<List<Article>>>();
 
 		for (Path file : files) {
-			dumpTasks.add(new StaXParserCallable(file, templateName));
+			dumpTasks.add(new TemplateStaXParserCallable(file, templateName));
 		}
 		
 		System.out.println("START EXTRACTING DATA FROM DUMP...");
@@ -142,8 +142,8 @@ public class Preprocessor {
 		try (BufferedWriter writer = Files.newBufferedWriter(path)){
 			for (String[] trainingExample : trainingExamples) {
 				String line = "\"" + trainingExample[0] + "\",\"" 
-							+ "\"" + trainingExample[1] + "\",\"" 
-							+ "\"" +trainingExample[2] + "\"\n";
+							+ trainingExample[1] + "\",\"" 
+							+ trainingExample[2] + "\"\n";
 				writer.write(line);
 			}
 		} catch (IOException e) {
