@@ -79,7 +79,8 @@ public class KeywordsStaXParserCallable implements Callable<List<Article>>{
 						continue;
 					}
 
-					if (event.asStartElement().getName().getLocalPart().equals(Constants.TEXT)) {
+					if (event.asStartElement().getName().getLocalPart().equals(Constants.TEXT) 
+							&& article.getArticleTitle() != null) {
 						
 						text = eventReader.getElementText().toLowerCase();
 						
@@ -119,7 +120,8 @@ public class KeywordsStaXParserCallable implements Callable<List<Article>>{
 					}
 				}
 
-				if (event.isEndElement()) {
+				if (event.isEndElement() 
+						&& article.getArticleTitle() != null) {
 
 					EndElement endElement = event.asEndElement();
 
@@ -144,96 +146,6 @@ public class KeywordsStaXParserCallable implements Callable<List<Article>>{
 		}
 
 		return articles;
-	}
-	
-	/**
-	 * Parse wiki page text to {@link InfoboxSchema}
-	 * @param text
-	 * @return {@link InfoboxSchema}
-	 */
-	private InfoboxSchema getInfoboxSchemaFromText(String text) {
-
-		Pattern patternInfobox = Pattern.compile(Constants.REGEX_INFOBOX_MAPPING);
-		Pattern patternTemplateName = Pattern.compile(Constants.REGEX_INFOBOX_TEMPLATE);
-
-		// extract infobox
-		Matcher mInfobox = patternInfobox.matcher(text);
-		
-		if (mInfobox.find()) {
-			InfoboxSchema infobox = new InfoboxSchema();
-			
-			String infoboxMatch = mInfobox.group(0);
-			
-			// extracts template name
-			Matcher mTemplate = patternTemplateName.matcher(infoboxMatch);
-			if (mTemplate.find()) {
-
-				String templateName = mTemplate.group(0).replaceAll("\n", "")
-						.trim().replaceAll(" ", "_");
-				
-				infobox.setTemplateName(templateName);
-				
-			}else
-				infobox.setTemplateName(null);
-
-			// removes template name from infobox matching
-			String props = infoboxMatch.replaceAll(Constants.REGEX_INFOBOX_TEMPLATE, "")
-					.replaceAll("\\<.*\\>", " ")
-					.replaceAll("\n\\|", " | ").replaceAll("\\{", "")
-					.replaceAll("\\}", "").replaceAll("\\[", "").replaceAll("\\]", "");
-			
-			// extracts for properties-values
-			if (props != null)
-				infobox.setTuples(getTuples(props));
-			else
-				infobox.setTuples(null);
-
-			return infobox;
-		}
-		return null;
-	}
-	
-	/**
-	 * Parse props-value text from infobox mapping and returns a list of {@link InfoboxTuple}
-	 * @param props - String
-	 * @return tuples - List<{@link InfoboxTuple}>
-	 */
-	private List<InfoboxTuple> getTuples(String props) {
-		
-		List<InfoboxTuple> tuples = new ArrayList<InfoboxTuple>();
-		
-		String[] splitProps = props.split(" \\| ");
-		
-		if(splitProps.length > 0) {
-			for (int i = 0; i < splitProps.length; i++) {
-	
-				if ((splitProps[i] != "") && (splitProps[i].contains("="))) {
-	
-					String[] tupleRaw = splitProps[i].trim().split(" \\= ");
-					
-					if (tupleRaw.length == 2) {
-						
-						if( !tupleRaw[0].equals("")
-								&& !tupleRaw[0].equals(" ")
-								&& !tupleRaw[1].equals("")
-								&& !tupleRaw[1].equals(" ")) {
-							
-							InfoboxTuple tuple = 
-									new InfoboxTuple(
-											tupleRaw[0].replace("|", "").trim(), 
-											tupleRaw[1].trim()
-											.replaceAll("\n", ""));
-							
-							if (!tuples.contains(tuple))
-								tuples.add(tuple);
-						
-						}
-					}
-				}
-			}
-		}
-		
-		return tuples;
 	}
 
 }
