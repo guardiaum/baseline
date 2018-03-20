@@ -13,7 +13,7 @@ public class Constants {
 	public static final String TEXT = "text";
 	
 	// regex for text extraction/cleaning
-	public static final String REGEX_CATEGORY = "\\[\\[Category:.*\\]\\]";
+	public static final String REGEX_CATEGORY = "\\[\\[category:.*\\]\\]";
 	public static final String REGEX_INFOBOX_MAPPING = "\\{\\{\\s?infobox.*\\n(|.*\\n)*\\}\\}";
 	public static final String REGEX_INFOBOX_TEMPLATE = "infobox(\\s\\w*){1,2}";
 	

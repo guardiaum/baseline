@@ -89,10 +89,12 @@ public class KeywordsStaXParserCallable implements Callable<List<Article>>{
 						
 						List<String> categories = new ArrayList<String>();
 						
-						while(matcher.find()) {
+						boolean labeled = false;
+						
+						while(matcher.find() && labeled==false) {
 							
 							String category = matcher.group(0)
-										.replaceAll("Category:", "")
+										.replaceAll("category:", "")
 										.replaceAll("\\[", "")
 										.replaceAll("]", "");
 							
@@ -102,15 +104,11 @@ public class KeywordsStaXParserCallable implements Callable<List<Article>>{
 								if(category.contains(keyword)) {
 									article.setMember(true);
 									System.out.println(article.getArticleTitle() +" -> " + article.isMember());
+									labeled = true;
 								}
 							}
 							
 						}
-						
-						if(categories.size()!=0)
-							System.out.println(article.getArticleTitle() +" -> " + categories);
-						else
-							System.out.println(article.getArticleTitle() +" -> NO CATEGORY");
 						
 						article.setText(text.replaceAll(Constants.REGEX_INFOBOX_MAPPING, "")
 										.replaceAll("\\n", " ").replaceAll("\\t", ""));
