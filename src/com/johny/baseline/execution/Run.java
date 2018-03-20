@@ -39,7 +39,7 @@ public class Run {
 			
 			*/
 			
-			String[] keywords = args[0].replace("infobox", "").split(" ");
+			String[] keywords = args[0].replace("infobox ", "").split(" ");
 			
 			System.out.println("KEYWORDS: "+ Arrays.toString(keywords));
 			

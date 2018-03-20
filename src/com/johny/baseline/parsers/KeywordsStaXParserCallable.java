@@ -86,28 +86,34 @@ public class KeywordsStaXParserCallable implements Callable<List<Article>>{
 						Pattern pattern = Pattern.compile(Constants.REGEX_CATEGORY);
 						Matcher matcher = pattern.matcher(text);
 						
-						String[] categories = new String[matcher.groupCount()];
+						List<String> categories = new ArrayList<String>();
 						
-						for(int i = 0; i < matcher.groupCount(); i++) {
-							String category = matcher.group(i)
-									.replaceAll("Category:", "")
-									.replaceAll("\\[", "")
-									.replaceAll("]", "");
-							categories[i] = category;
-						}
-						
-						for (String keyword : keywords) {
-							for (String category : categories) {
+						while(matcher.find()) {
+							
+							String category = matcher.group(0)
+										.replaceAll("Category:", "")
+										.replaceAll("\\[", "")
+										.replaceAll("]", "");
+							
+							categories.add(category);
+							
+							for (String keyword : keywords) {
 								if(category.contains(keyword)) {
-									System.out.println(article.getArticleTitle() +" -> " + Arrays.toString(categories));
-									System.out.println(article.getArticleTitle() +" -> " + "TRUE");
 									article.setMember(true);
+									System.out.println(article.getArticleTitle() +" -> " + article.isMember());
 								}
 							}
+							
 						}
+						
+						if(categories.size()!=0)
+							System.out.println(article.getArticleTitle() +" -> " + categories);
+						else
+							System.out.println(article.getArticleTitle() +" -> NO CATEGORY");
 						
 						article.setText(text.replaceAll(Constants.REGEX_INFOBOX_MAPPING, "")
 										.replaceAll("\\n", " ").replaceAll("\\t", ""));
+						
 						continue;
 					
 					}
