@@ -103,7 +103,7 @@ public class KeywordsStaXParserCallable implements Callable<List<Article>>{
 							for (String keyword : keywords) {
 								if(category.contains(keyword)) {
 									article.setMember(true);
-									System.out.println(article.getArticleTitle() +" -> " + article.isMember());
+									//System.out.println(article.getArticleTitle() +" -> " + article.isMember());
 									labeled = true;
 								}
 							}

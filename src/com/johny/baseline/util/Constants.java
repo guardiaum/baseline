@@ -22,6 +22,9 @@ public class Constants {
 	public static final String PROJECT_DIR = System.getProperty("user.dir");
 	public static final String WIKIPEDIA_CHUNKS = USER_DIR + "/workspace/kobe/infoboxes-extractor/wikipedia-dump/wikipedia-xml-chunks";
 	public static final String TRAINING_DATASET = PROJECT_DIR + "/dataset/training-set.csv";
+	
+	// OpenNLP models
 	public static final String SENTENCE_DETECTOR = PROJECT_DIR + "/open-nlp-models/en-sent.bin";
+	public static final String POSTAGGER_DETECTOR = PROJECT_DIR + "/open-nlp-models/en-pos-maxent.bin";
 	
 }
