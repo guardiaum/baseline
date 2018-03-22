@@ -243,15 +243,18 @@ public class Preprocessor {
 		for (String sentence : sentences) {
 			
 			if(sentence.contains(tuple.getValue()))
-				allMatches.add(sentence);
+				allMatches.add(sentence.replaceAll("\"", "").replaceAll("\'", ""));
 		
 		}
 		
 		List<String[]> trainingExamples = new ArrayList<String[]>();
 		
-		if(allMatches.size() == 1)
-			trainingExamples.add(new String[]{tuple.getProperty(), allMatches.get(0), "t"});
-		else if(allMatches.size() > 1)
+		if(allMatches.size() == 1) {
+			trainingExamples.add(
+					new String[]{tuple.getProperty(), 
+							allMatches.get(0), 
+							"t"});
+		}else if(allMatches.size() > 1)
 			return labelSentences(tuple, allMatches);
 		
 		return trainingExamples;

@@ -17,10 +17,12 @@ import cc.mallet.classify.ClassifierTrainer;
 import cc.mallet.classify.MaxEnt;
 import cc.mallet.classify.MaxEntTrainer;
 import cc.mallet.pipe.CharSequence2TokenSequence;
+import cc.mallet.pipe.FeatureSequence2FeatureVector;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.PrintInputAndTarget;
 import cc.mallet.pipe.SerialPipes;
 import cc.mallet.pipe.Target2Label;
+import cc.mallet.pipe.TokenSequence2FeatureSequence;
 import cc.mallet.pipe.tsf.TokenText;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
@@ -60,7 +62,7 @@ public class Run {
 	private static ClassifierTrainer<MaxEnt> runSentenceClassifier(List<String[]> trainingExamples) 
 			throws IOException {
 		
-		/* TOKENIZE AND POSTAG WITH MALLET */
+		/* TOKENIZE AND POSTAG (WITH MALLET??) */
 		Pipe pipe = buildPipe();
 		
 		InstanceList instanceList = new InstanceList(pipe);
@@ -104,7 +106,9 @@ public class Run {
 		
 		pipeList.add(new CharSequence2TokenSequence());
 		pipeList.add(new TokenText());
+		pipeList.add(new TokenSequence2FeatureSequence());
 		pipeList.add(new Target2Label());
+		pipeList.add(new FeatureSequence2FeatureVector());
         pipeList.add(new PrintInputAndTarget());
         
 		return new SerialPipes(pipeList);
