@@ -16,6 +16,7 @@ import com.johny.baseline.modules.Preprocessor;
 import cc.mallet.classify.ClassifierTrainer;
 import cc.mallet.classify.MaxEnt;
 import cc.mallet.classify.MaxEntTrainer;
+import cc.mallet.fst.SimpleTagger;
 import cc.mallet.pipe.CharSequence2TokenSequence;
 import cc.mallet.pipe.FeatureSequence2FeatureVector;
 import cc.mallet.pipe.Pipe;
@@ -62,17 +63,19 @@ public class Run {
 	private static ClassifierTrainer<MaxEnt> runSentenceClassifier(List<String[]> trainingExamples) 
 			throws IOException {
 		
+		// bag of words
+		// part of speech
+
 		/* TOKENIZE AND POSTAG (WITH MALLET??) */
 		Pipe pipe = buildPipe();
-		
 		InstanceList instanceList = new InstanceList(pipe);
 		
 		for (String[] example : trainingExamples) {
-			// sequence: sentence, label, attribute
-			Instance instance = new Instance(example[1], example[2], example[0], null);
+			// sequence: sentence, attribute, attribute
+			Instance instance = new Instance(example[1], example[0], example[0], null);
 			
 			// Now process each instance provided by the iterator.
-			instanceList.addThruPipe(instance);
+			instanceList.add(instance);
 		}
 		
 		ClassifierTrainer<MaxEnt> maxEnt = new MaxEntTrainer();
@@ -104,11 +107,11 @@ public class Run {
 	private static Pipe buildPipe() {
 		ArrayList<Pipe> pipeList = new ArrayList<Pipe>();
 		
-		pipeList.add(new CharSequence2TokenSequence());
-		pipeList.add(new TokenText());
-		pipeList.add(new TokenSequence2FeatureSequence());
+		//pipeList.add(new CharSequence2TokenSequence());
+		pipeList.add(new SimpleTagger.SimpleTaggerSentence2FeatureVectorSequence());
+		/*pipeList.add(new TokenSequence2FeatureSequence());
 		pipeList.add(new Target2Label());
-		pipeList.add(new FeatureSequence2FeatureVector());
+		pipeList.add(new FeatureSequence2FeatureVector());*/
         pipeList.add(new PrintInputAndTarget());
         
 		return new SerialPipes(pipeList);
