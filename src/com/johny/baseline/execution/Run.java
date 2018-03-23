@@ -72,16 +72,19 @@ public class Run {
 		
 		for (String[] example : trainingExamples) {
 			// sequence: sentence, attribute, attribute
-			Instance instance = new Instance(example[1], example[0], example[0], null);
+			System.out.println(example[1]);
+			System.out.println(example[0]);
 			
-			// Now process each instance provided by the iterator.
+			Instance instance = new Instance(example[1], example[0], example[0], null);
 			instanceList.add(instance);
 		}
 		
 		ClassifierTrainer<MaxEnt> maxEnt = new MaxEntTrainer();
 		maxEnt.train(instanceList);
 		
-		/* TOKENIZE AND POSTAG WITH OPEN NLP
+		/*
+		
+		TOKENIZE AND POSTAG WITH OPEN NLP
 		
 		List<String[]> taggedSentences = new ArrayList<String[]>(); 
 		
@@ -99,7 +102,9 @@ public class Run {
 			
 			taggedSentences.add(new String[]{trainExample[0], 
 					Arrays.toString(tokens), Arrays.toString(tags), trainExample[2]});
-		}*/
+		}
+		
+		*/
 		
 		return maxEnt;
 	}
@@ -107,7 +112,7 @@ public class Run {
 	private static Pipe buildPipe() {
 		ArrayList<Pipe> pipeList = new ArrayList<Pipe>();
 		
-		//pipeList.add(new CharSequence2TokenSequence());
+		pipeList.add(new CharSequence2TokenSequence());
 		pipeList.add(new SimpleTagger.SimpleTaggerSentence2FeatureVectorSequence());
 		/*pipeList.add(new TokenSequence2FeatureSequence());
 		pipeList.add(new Target2Label());
