@@ -35,7 +35,7 @@ public class KeywordsStaXParserCallable implements Callable<List<Article>>{
 	
 	@Override
 	public List<Article> call() throws Exception {
-		System.out.println(">>>> File: " + this.file);
+		//System.out.println(">>>> File: " + this.file);
 		return readConfig(this.file);
 	}
 	
