@@ -142,8 +142,9 @@ public class Preprocessor {
 		try (BufferedWriter writer = Files.newBufferedWriter(path)){
 			for (String[] trainingExample : trainingExamples) {
 				String line = "\"" + trainingExample[0] + "\",\"" 
-							+ trainingExample[1] + "\",\"" 
-							+ trainingExample[2] + "\"\n";
+							+ trainingExample[1] + "\",\""
+							+ trainingExample[2] + "\",\""
+							+ trainingExample[3] + "\"\n";
 				writer.write(line);
 			}
 		} catch (IOException e) {
@@ -252,6 +253,7 @@ public class Preprocessor {
 		if(allMatches.size() == 1) {
 			trainingExamples.add(
 					new String[]{tuple.getProperty(), 
+							tuple.getValue(),
 							allMatches.get(0), 
 							"t"});
 		}else if(allMatches.size() > 1)
@@ -296,9 +298,9 @@ public class Preprocessor {
 			double matchPercentage = count / (double) tokens.size();
 			
 			if(matchPercentage >= 0.6)
-				trainingExamples.add(new String[] {tuple.getProperty(), sentenceMatch, "t"});
+				trainingExamples.add(new String[] {tuple.getProperty(), tuple.getValue(), sentenceMatch, "t"});
 			else
-				trainingExamples.add(new String[] {tuple.getProperty(), sentenceMatch, "f"});
+				trainingExamples.add(new String[] {tuple.getProperty(), tuple.getValue(), sentenceMatch, "f"});
 			
 		}
 		

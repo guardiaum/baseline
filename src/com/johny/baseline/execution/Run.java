@@ -21,6 +21,7 @@ import cc.mallet.classify.MaxEnt;
 import cc.mallet.classify.MaxEntTrainer;
 import cc.mallet.fst.SimpleTagger;
 import cc.mallet.pipe.CharSequence2TokenSequence;
+import cc.mallet.pipe.Csv2FeatureVector;
 import cc.mallet.pipe.FeatureSequence2FeatureVector;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.PrintInputAndTarget;
@@ -95,7 +96,7 @@ public class Run {
 			System.out.println("TAGS: " + Arrays.toString(tags));
 			System.out.println("");
 			
-			Instance inst = new Instance(tags, target, target, null);
+			Instance inst = new Instance(new String[][] {tokens, tags}, target, target, null);
 			
 			instanceList.addThruPipe(inst);
 		}
@@ -109,9 +110,9 @@ public class Run {
 	private static Pipe buildPipe() {
 		ArrayList<Pipe> pipeList = new ArrayList<Pipe>();
 		
-		//pipeList.add(new CharSequence2TokenSequence());
+		pipeList.add(new Csv2FeatureVector());
 		//pipeList.add(new SimpleTagger.SimpleTaggerSentence2FeatureVectorSequence());
-		pipeList.add(new TokenSequence2FeatureSequence());
+		//pipeList.add(new TokenSequence2FeatureSequence());
 		//pipeList.add(new Target2Label());
 		//pipeList.add(new FeatureSequence2FeatureVector());
         pipeList.add(new PrintInputAndTarget());
