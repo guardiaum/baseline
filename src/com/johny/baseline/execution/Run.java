@@ -167,7 +167,7 @@ public class Run {
 		List<String[]> trainingExamples = p.documentSegmentation(articles, listSelectedAttributes);
 		
 		// Save training set to file
-		p.constructsTrainingDataset(trainingExamples);
+		p.constructsTrainingDatasets(trainingExamples, listSelectedAttributes);
 		
 		return trainingExamples;
 	}

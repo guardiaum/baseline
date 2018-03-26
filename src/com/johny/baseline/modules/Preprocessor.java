@@ -133,23 +133,43 @@ public class Preprocessor {
 	/**
 	 * Constructs training datasets for use when 
 	 * learning classifiers and extractors
+	 * @throws IOException 
 	 */
-	public void constructsTrainingDataset(List<String[]> trainingExamples) {
-		System.out.println("CONSTRUCTING TRAINING DATASET");
+	public void constructsTrainingDatasets(List<String[]> trainingExamples, 
+			List<String> listSelectedAttributes) throws IOException {
+		
+		System.out.println("CONSTRUCTING TRAINING DATASETS");
 		System.out.println("TRAINING EXAMPLES SIZE: " + trainingExamples.size());
 		
-		Path path = Paths.get(Constants.TRAINING_DATASET);
-		try (BufferedWriter writer = Files.newBufferedWriter(path)){
-			for (String[] trainingExample : trainingExamples) {
-				String line = "\"" + trainingExample[0] + "\",\"" 
-							+ trainingExample[1] + "\",\""
-							+ trainingExample[2] + "\",\""
-							+ trainingExample[3] + "\"\n";
-				writer.write(line);
+		for (String attribute : listSelectedAttributes) {
+			
+			Path path = Paths.get(Constants.DATASETS_DIR + "/"+attribute+"-training-set.csv");
+			
+			if(!Files.exists(path)) {
+				Files.createDirectories(path.getParent());
+				Files.createFile(path);
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
+			
+			try (BufferedWriter writer = Files.newBufferedWriter(path)){
+				
+				for (String[] trainingExample : trainingExamples) {
+					
+					if(trainingExample[0].equals(attribute)) {
+						String line = "\"" + trainingExample[0] + "\",\"" 
+									+ trainingExample[1] + "\",\""
+									+ trainingExample[2] + "\",\""
+									+ trainingExample[3] + "\"\n";
+						writer.write(line);
+					}
+					
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+				
 	}
 	
 	/***
