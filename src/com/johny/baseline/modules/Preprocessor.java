@@ -164,6 +164,7 @@ public class Preprocessor {
 					
 				}
 				
+				writer.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
