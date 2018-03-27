@@ -28,6 +28,7 @@ import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.PrintInputAndTarget;
 import cc.mallet.pipe.SerialPipes;
 import cc.mallet.pipe.SimpleTaggerSentence2TokenSequence;
+import cc.mallet.pipe.SvmLight2FeatureVectorAndLabel;
 import cc.mallet.pipe.Target2Label;
 import cc.mallet.pipe.Target2LabelSequence;
 import cc.mallet.pipe.TokenSequence2FeatureSequence;
@@ -137,10 +138,10 @@ public class Run {
 		ArrayList<Pipe> pipeList = new ArrayList<Pipe>();
 
 		pipeList.add(new POSTagger());
-		pipeList.add(new FeatureSequence2FeatureVector());
+		pipeList.add(new SvmLight2FeatureVectorAndLabel());
 		
 		/* um ou outro */
-		pipeList.add(new Target2Label());
+		//pipeList.add(new Target2Label());
 		//pipeList.add(new Target2LabelSequence());
 		
 		pipeList.add(new PrintInputAndTarget());

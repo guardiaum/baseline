@@ -65,8 +65,9 @@ public class POSTagger extends Pipe{
 				
 				label = (String) target;
 				
+				newData = label;
 				for (int i = 0; i < tokens.length; i++)
-					newData += tokens[i] + ":" + tags[i] + " ";
+					newData += " " + tokens[i] + ":" + tags[i];
 				
 			}
 		}
