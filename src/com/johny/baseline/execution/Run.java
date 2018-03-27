@@ -23,12 +23,14 @@ import com.johny.baseline.util.POSTagger;
 import cc.mallet.classify.ClassifierTrainer;
 import cc.mallet.classify.MaxEnt;
 import cc.mallet.classify.MaxEntTrainer;
+import cc.mallet.pipe.FeatureSequence2FeatureVector;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.PrintInputAndTarget;
 import cc.mallet.pipe.SerialPipes;
 import cc.mallet.pipe.SimpleTaggerSentence2TokenSequence;
 import cc.mallet.pipe.Target2Label;
 import cc.mallet.pipe.Target2LabelSequence;
+import cc.mallet.pipe.TokenSequence2FeatureSequence;
 import cc.mallet.pipe.TokenSequence2FeatureVectorSequence;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
@@ -135,8 +137,7 @@ public class Run {
 		ArrayList<Pipe> pipeList = new ArrayList<Pipe>();
 
 		pipeList.add(new POSTagger());
-		pipeList.add(new SimpleTaggerSentence2TokenSequence());
-		pipeList.add(new TokenSequence2FeatureVectorSequence());
+		pipeList.add(new FeatureSequence2FeatureVector());
 		
 		/* um ou outro */
 		pipeList.add(new Target2Label());

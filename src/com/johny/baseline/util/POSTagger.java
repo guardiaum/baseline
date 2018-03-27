@@ -57,14 +57,18 @@ public class POSTagger extends Pipe{
 			WhitespaceTokenizer tokenizer = WhitespaceTokenizer.INSTANCE;
 	
 			String[] tokens = tokenizer.tokenize((String) data);
-	
+			
 			String[] tags = tagger.tag(tokens);
 			
 			String label = "";
-			if(label instanceof String)
+			if(label instanceof String) {
+				
 				label = (String) target;
-			
-			newData = Arrays.toString(tokens) + " POS=" + Arrays.toString(tags) + " " + label;
+				
+				for (int i = 0; i < tokens.length; i++)
+					newData += tokens[i] + ":" + tags[i] + " ";
+				
+			}
 		}
 		
 		System.out.println(">>> NEWDATA: " + newData);
