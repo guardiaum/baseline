@@ -27,6 +27,8 @@ import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.PrintInputAndTarget;
 import cc.mallet.pipe.SerialPipes;
 import cc.mallet.pipe.SimpleTaggerSentence2TokenSequence;
+import cc.mallet.pipe.Target2Label;
+import cc.mallet.pipe.Target2LabelSequence;
 import cc.mallet.pipe.TokenSequence2FeatureVectorSequence;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
@@ -135,6 +137,11 @@ public class Run {
 		pipeList.add(new POSTagger());
 		pipeList.add(new SimpleTaggerSentence2TokenSequence());
 		pipeList.add(new TokenSequence2FeatureVectorSequence());
+		
+		/* um ou outro */
+		pipeList.add(new Target2Label());
+		//pipeList.add(new Target2LabelSequence());
+		
 		pipeList.add(new PrintInputAndTarget());
 
 		return new SerialPipes(pipeList);

@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 import cc.mallet.pipe.Pipe;
 import cc.mallet.types.Instance;
@@ -31,7 +32,7 @@ public class POSTagger extends Pipe{
 			
 			input = new FileInputStream(Constants.POSTAGGER_DETECTOR);
 			POSModel model = new POSModel(input);
-			POSTaggerME tagger = new POSTaggerME(model);
+			this.tagger = new POSTaggerME(model);
 		
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -63,7 +64,7 @@ public class POSTagger extends Pipe{
 			if(label instanceof String)
 				label = (String) target;
 			
-			newData = tokens + " POS=" + tags + " " + label;
+			newData = Arrays.toString(tokens) + " POS=" + Arrays.toString(tags) + " " + label;
 		}
 		
 		System.out.println(">>> NEWDATA: " + newData);
