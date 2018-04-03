@@ -1,4 +1,4 @@
-package com.johny.baseline.parsers;
+package com.jms5.baseline.parsers;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,10 +18,10 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.XMLEvent;
 
-import com.johny.baseline.beans.Article;
-import com.johny.baseline.beans.InfoboxSchema;
-import com.johny.baseline.beans.InfoboxTuple;
-import com.johny.baseline.util.Constants;
+import com.jms5.baseline.beans.Article;
+import com.jms5.baseline.beans.InfoboxSchema;
+import com.jms5.baseline.beans.InfoboxTuple;
+import com.jms5.baseline.util.Constants;
 
 public class KeywordsStaXParserCallable implements Callable<List<Article>>{
 

@@ -1,4 +1,4 @@
-package com.johny.baseline.util;
+package com.jms5.baseline.util;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -50,7 +50,7 @@ public class POSTagger extends Pipe{
 		Object data = inst.getData();
 		Object target = inst.getTarget();
 		
-		System.out.println(">>> DATA: " + data);
+		//System.out.println(">>> DATA: " + data);
 		
 		if(data instanceof String) {
 		
@@ -65,14 +65,14 @@ public class POSTagger extends Pipe{
 				
 				label = (String) target;
 				
-				newData = label;
 				for (int i = 0; i < tokens.length; i++)
-					newData += " " + tokens[i] + ":" + tags[i];
+					newData += tokens[i] + " " + tags[i] + " ";
 				
+				newData += label;
 			}
 		}
 		
-		System.out.println(">>> NEWDATA: " + newData);
+		//System.out.println(">>> NEWDATA: " + newData);
 		
 		inst.setData(newData);
 		

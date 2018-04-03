@@ -1,4 +1,4 @@
-package com.johny.baseline.util;
+package com.jms5.baseline.util;
 
 import java.util.Collections;
 import java.util.Comparator;

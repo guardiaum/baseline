@@ -1,4 +1,4 @@
-package com.johny.baseline.beans;
+package com.jms5.baseline.beans;
 /**
  * POJO for Article
  * @author jms5
